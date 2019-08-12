@@ -19,22 +19,31 @@ var univ_beneRoute = require(__dirname+'/api/routes/univ_beneRoute');
 var loginRoute = require(__dirname+'/api/routes/loginRoute');
 var signupRoute = require(__dirname+'/api/routes/signupRoute');
 
+
+app.disable('x-powered-by');
 app.use('/api/univ',univRoute);
-app.use('/univ_item',univ_itemRoute);
+app.use('/api/univ_item',univ_itemRoute);
 app.use('/api/univ_post',univ_postRoute);
-app.use('/univ_bene',univ_beneRoute);
+app.use('/api/univ_bene',univ_beneRoute);
 app.use('/api/auth/login',loginRoute);
-app.use('/auth/signup',signupRoute);
+app.use('/api/auth/signup',signupRoute);
 
 // if (process.env.NODE_ENV === "production") {
-//     app.use(express.static(path.join(__dirname, "client/build")));
+//     app.use(express.static(path.join(__dirname, "../client/build")));
+//     app.get('/*',function(req,res){
+//         res.sendFile(path.join(__dirname, "../client/build", "index.html"));
+//     });
 // }
 
-// app.use(express.static(path.join(__dirname, "client/build")));
+// app.use(express.static(path.join(__dirname, "../client/build")));
 
-// app.get('*',function(req,res){
-//     res.sendFile(path.join(__dirname, "client/build", "index.html"));
+// app.get('/univ/*',function(req,res){
+//     res.sendFile(path.join(__dirname, "../client/build", "index.html"));
 // });
+
+app.use('*',function(req,res){
+    res.sendFile(path.join(__dirname, "notfound.html"));
+})
 
 app.listen(function(){
     console.log('app is running on server');

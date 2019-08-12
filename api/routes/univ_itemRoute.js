@@ -25,7 +25,7 @@ router.get('/',function(req,res){
 * */
 router.get('/:univ_id',function(req,res){
     var univ_id = req.params.univ_id;
-    var sql = 'SELECT * FROM univ_item WHERE univ_id = ? AND univ_item_isDeleted=0';
+    var sql = 'SELECT * FROM univ_item WHERE univ_id = ? AND univ_item_isDeleted=0 ORDER BY univ_item_order';
     var params = [univ_id];
 
     connect.query(sql,params,function(err,rows,fields){

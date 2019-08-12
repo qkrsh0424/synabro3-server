@@ -2,11 +2,23 @@ const express = require('express');
 const router = express();
 const connect = require('../../database/database');
 const cipher = require('../../handler/security');
+const authApi = require('../../handler/accessApi');
 
 //Element
 //univ_post 는 univ페이지에서 생성된 글 또는 포스트의 정보를 가져온다.
 //Deleted 정보 => post_isDeleted.
 
+router.use('/*',function(req,res,next){
+    if(!req.headers.authorization){
+        res.send('올바른 접근 방식이 아닙니다.');
+    }else{
+        if(authApi.univ_postApiAuth(req.baseUrl.split('/')[2],req.headers.authorization)===true){
+            next();
+        }else{
+            res.send(undefined);
+        }
+    }
+});
 /*
 * /univ_post 현재 가지고있는 모든 univ내의 포스트 정보를 가져온다.
 * */
