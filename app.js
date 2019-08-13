@@ -41,9 +41,9 @@ app.use('/api/auth/signup',signupRoute);
 //     res.sendFile(path.join(__dirname, "../client/build", "index.html"));
 // });
 
-app.use('*',function(req,res){
-    res.sendFile(path.join(__dirname, "notfound.html"));
-})
+// app.use('*',function(req,res){
+//     res.sendFile(path.join(__dirname, "notfound.html"));
+// })
 
 app.listen(function(){
     console.log('app is running on server');

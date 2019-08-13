@@ -4,13 +4,6 @@ const connect = require('../../database/database');
 const cipher = require('../../handler/security');
 
 router.post('/',function(req,res){
-    var ouser_job = req.body.user_job;
-    var ouser_major = req.body.user_major;
-    var ouser_email = req.body.user_email;   //암호화 진행
-    var ouser_password = req.body.user_password; //암호화 진행
-    var ouser_name = req.body.user_name; //암호화 진행
-    var ouser_nickname = req.body.user_nickname;
-    var ouser_gender = req.body.user_gender;
 
     const user_email = cipher.encrypt(req.body.user_email);
 
@@ -49,35 +42,5 @@ router.post('/',function(req,res){
         }
     });
 });
-
-function encrypt(data){
-    const cipher = crypto.createCipher('aes-256-cbc', accessKey.accessKey);
-    let result = cipher.update(data,'utf-8','base64');
-    result += cipher.final('base64');
-    return result;
-}
-
-function decrypt(data){
-    const cipher = crypto.createDecipher('aes-256-cbc', 'parkchoyang6316111');
-    let result = cipher.update(data, 'base64', 'utf-8');
-    result += cipher.final('utf-8');
-    return result;
-}
-
-function makeSalt(){
-    return crypto.randomBytes(32).toString('base64');
-}
-
-function makeEncryptPassword(data,salt){
-    return crypto.pbkdf2Sync(data, salt, 130495, 64, 'sha512').toString('base64');
-}
-
-function makeIndex(servertime){
-    let serverTime = servertime.toString();
-    // console.log(serverTime);
-    let indexSalt = makeSalt();
-    let index = crypto.pbkdf2Sync(serverTime, indexSalt, 130495, 32, 'sha512').toString('base64');
-    return index;
-}
 
 module.exports = router;
